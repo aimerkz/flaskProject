@@ -6,7 +6,10 @@ from api.models import FileInformartion, db
 class FileInfo(Resource):
     def get(self):
         files = FileInformartion.query.all()
-        return {'files': list(file.json() for file in files)}
+        if files:
+            return {'files': list(file.json() for file in files)}
+        else:
+            return {'message': 'Objects not found'}
 
     def post(self):
         data = request.get_json()
@@ -16,6 +19,7 @@ class FileInfo(Resource):
             data['size'],
             data['path'],
             data['created_at'],
+            data['updated_at'],
             data['comment']
         )
         db.session.add(new_file)

@@ -1,5 +1,7 @@
 import os
 
+from dotenv import load_dotenv
+
 from flask import Flask
 from flask_restful import Api
 
@@ -7,11 +9,13 @@ from api.models import db
 from api.views import FileInfo
 
 
+load_dotenv()
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = os.getenv('TRACK_MODIFICATIONS')
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-api = Api()
+api = Api(app)
 db.init_app(app)
 
 api.add_resource(FileInfo, '/api/files/')
