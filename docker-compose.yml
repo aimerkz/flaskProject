@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  db:
+    image: postgres
+    container_name: postgres_flask
+    restart: always
+    environment:
+      - POSTGRES_DB=flaskdb
+      - POSTGRES_USER=flaskuser
+      - POSTGRES_PASSWORD=12345
+    volumes:
+      - db_flask:/var/lib/postgresql/data/
+    ports:
+      - '54320:5432'
+
+volumes:
+  db_flask:

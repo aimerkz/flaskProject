@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 
 from flask import Flask
+from flask_migrate import Migrate
 from flask_restful import Api
 
 from api.models import db
@@ -19,11 +20,10 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 api = Api(app)
 db.init_app(app)
+migrate = Migrate(app, db)
 
 api.add_resource(FileList, '/api/files/')
-api.add_resource(FileDetail, '/api/file/<int:file_id>/')
+api.add_resource(FileDetail, '/api/files/<int:file_id>/')
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-        app.run(debug=True, port=5000, host='127.0.0.1')
+    app.run(debug=True, port=5000, host='127.0.0.1')
