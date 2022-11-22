@@ -1,12 +1,12 @@
-from _datetime import datetime
+from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 
 
 db = SQLAlchemy()
 
 
-class FileInformartion(db.Model):
-    __tablename__ = 'file_information'
+class File(db.Model):
+    __tablename__ = 'file'
 
     file_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, nullable=False)
@@ -15,7 +15,7 @@ class FileInformartion(db.Model):
     path = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now())
     updated_at = db.Column(db.DateTime, nullable=True)
-    comment = db.Column(db.Text)
+    comment = db.Column(db.Text, nullable=True)
 
     def __init__(self, name, extension, size, path,
                  created_at, updated_at, comment):
