@@ -3,4 +3,6 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt --no-cache-dir
 COPY ./ /app
-CMD ['python3', 'main.py']
+ENV FLASK_APP=main.py
+ENV FLASK_DEBUG=1
+EXPOSE 5000
