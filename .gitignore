@@ -22,7 +22,6 @@ share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-MANIFEST
 
 .python-version
 
@@ -37,3 +36,5 @@ venv.bak/
 .idea
 .vscode/
 *.code-workspace
+
+/migrations/
