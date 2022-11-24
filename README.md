@@ -30,4 +30,5 @@ docker-compose exec web_flask db migrate
 docker exec -i postgres_flask psql -U flaskuser flaskdb < static/flaskdb_dump.sql
 ```
 - Перейдите по ссылке: \
-[flaskProject](http://0.0.0.0:5000/api/files/)
+[flaskProject](http://0.0.0.0:5000/api/files/) \
+[Swagger UI](http://0.0.0.0:5000/api/swagger/)
