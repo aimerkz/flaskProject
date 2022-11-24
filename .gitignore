@@ -37,4 +37,4 @@ venv.bak/
 .vscode/
 *.code-workspace
 
-/migrations/
+migrations/

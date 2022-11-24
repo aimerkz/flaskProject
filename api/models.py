@@ -8,12 +8,12 @@ db = SQLAlchemy()
 class File(db.Model):
     __tablename__ = 'file'
 
-    file_id = db.Column(db.Integer, primary_key=True)
+    file_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.Text, nullable=False)
     extension = db.Column(db.String(10), nullable=False)
     size = db.Column(db.Integer, nullable=False)
     path = db.Column(db.String, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.now())
+    created_at = db.Column(db.DateTime, default=datetime.now(), nullable=False)
     updated_at = db.Column(db.DateTime, nullable=True)
     comment = db.Column(db.Text, nullable=True)
 
