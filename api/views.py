@@ -37,3 +37,11 @@ class FileDetail(Resource):
         db.session.delete(file)
         db.session.commit()
         return {'message': 'File deleted successfully'}, 204
+
+
+class FileSearch(Resource):
+
+    def get(self, *args, **kwargs):
+        args = request.args
+        files = File.query.filter(File.path.ilike("%"+args.get('path')+"%")).all()
+        return {'files': list(file.json() for file in files)}
