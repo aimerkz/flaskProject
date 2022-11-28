@@ -4,6 +4,7 @@ from api.models import File, db
 
 
 class FileList(Resource):
+    """Получение списка всех файлов. Создание файла."""
     def get(self):
         files = File.query.all()
         if files:
@@ -28,6 +29,7 @@ class FileList(Resource):
 
 
 class FileDetail(Resource):
+    """Получение файла по file_id. Удаление файла."""
     def get(self, file_id):
         file = File.query.filter_by(file_id=file_id).first_or_404()
         return file.json()
@@ -40,6 +42,7 @@ class FileDetail(Resource):
 
 
 class FileSearch(Resource):
+    """Получение списка всех файлов с учетом поиска по path."""
 
     def get(self, *args, **kwargs):
         args = request.args
