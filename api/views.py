@@ -1,5 +1,6 @@
 import os
 from os.path import join, dirname, realpath
+import json
 
 from flask import request
 from flask_restful import Resource
@@ -11,17 +12,28 @@ UPLOAD_PATH = join(dirname(realpath(__file__)), '../static/uploads/')
 
 
 class FileUpload(Resource):
-    """Загрузка файла из локального хранилища"""
-
+    """Загрузка файла из локального хранилища."""
     def post(self):
         file = request.files.get('file')
+        data = request.args.get('comment')
         filename = secure_filename(file.filename)
+        upload = File(
+            name='.'.join(filename.split('.')[:-1]),
+            extension='.'+'.'.join(filename.split('.')[-1:]),
+            size=(os.stat(filename)).st_size,
+            path=UPLOAD_PATH,
+            created_at=None,
+            updated_at=None,
+            comment=data
+        )
         file.save(os.path.join(UPLOAD_PATH, filename))
+        db.session.add(upload)
+        db.session.commit()
         return 'File uploaded successfully', 201
 
 
 class FileList(Resource):
-    """Получение списка всех файлов. Создание файла."""
+    """Получение списка всех файлов. Создание информации о файле."""
     def get(self):
         files = File.query.all()
         if files:
