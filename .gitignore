@@ -38,3 +38,4 @@ venv.bak/
 *.code-workspace
 
 migrations/
+static/uploads/

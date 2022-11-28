@@ -1,6 +1,23 @@
+import os
+from os.path import join, dirname, realpath
+
 from flask import request
 from flask_restful import Resource
 from api.models import File, db
+from werkzeug.utils import secure_filename
+
+
+UPLOAD_PATH = join(dirname(realpath(__file__)), '../static/uploads/')
+
+
+class FileUpload(Resource):
+    """Загрузка файла из локального хранилища"""
+
+    def post(self):
+        file = request.files.get('file')
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(UPLOAD_PATH, filename))
+        return 'File uploaded successfully', 201
 
 
 class FileList(Resource):
@@ -45,7 +62,7 @@ class FileSearch(Resource):
     """Получение списка всех файлов с учетом поиска по path."""
     def get(self, *args, **kwargs):
         args = request.args
-        files = File.query.filter(File.path.ilike('%'+args.get('path')+'%')).all()
+        files = File.query.filter(File.path.ilike('%' + args.get('path') + '%')).all()
         if files:
             return {'files': list(file.json() for file in files)}
         else:
