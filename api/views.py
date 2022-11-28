@@ -43,5 +43,8 @@ class FileSearch(Resource):
 
     def get(self, *args, **kwargs):
         args = request.args
-        files = File.query.filter(File.path.ilike("%"+args.get('path')+"%")).all()
-        return {'files': list(file.json() for file in files)}
+        files = File.query.filter(File.path.ilike('%'+args.get('path')+'%')).all()
+        if files:
+            return {'files': list(file.json() for file in files)}
+        else:
+            return {'message': 'Objects not found'}, 404
