@@ -43,7 +43,6 @@ class FileDetail(Resource):
 
 class FileSearch(Resource):
     """Получение списка всех файлов с учетом поиска по path."""
-
     def get(self, *args, **kwargs):
         args = request.args
         files = File.query.filter(File.path.ilike('%'+args.get('path')+'%')).all()
