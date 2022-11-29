@@ -64,6 +64,7 @@
             "tags": [
                 "Add file"
             ],
+                "description": "Создание информации о файле",
             "requestBody": {
             "required": true,
             "content": {
@@ -93,6 +94,7 @@
                 "tags": [
                     "Get all files"
                 ],
+                "description": "Получение списка информации о всех файлах",
                 "responses": {
                 "200": {
                     "description": "OK",
@@ -114,6 +116,7 @@
                 "tags": [
                     "Get all files"
                 ],
+                "description": "Поиск файлов по path",
                 "parameters": [{
                     "name": "path",
                     "in": "query",
@@ -141,6 +144,7 @@
                 "tags": [
                     "Get file"
                 ],
+                "description": "Получение информации о файле по file_id",
                 "parameters": [{
                   "name": "file_id",
                   "in": "path",
@@ -170,6 +174,7 @@
             "tags": [
                 "Delete file"
             ],
+            "description": "Удаление файла по file_id",
             "parameters": [{
                 "name": "file_id",
                 "in": "path",
