@@ -59,144 +59,197 @@
     },
 
 "paths": {
-        "/files": {
-            "post": {
+    "/files/upload": {
+        "post": {
             "tags": [
-                "Add file"
+                "Upload file"
             ],
-                "description": "Создание информации о файле",
+            "description": "Загрузка файла из локального хранилища",
             "requestBody": {
-            "required": true,
-            "content": {
-                "application/json": {
-                "schema": {
-                    "$ref": "#/components/schemas/File"
+                "content": {
+                    "multipart/form-data": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "file": {
+                                    "type": "string",
+                                    "format": "binary",
+                                    "nullable": true
+                  }
+                }
+              },
+                        "encoding": {
+                            "file": {
+                                "style": "form"
+                            }
+                        }
                     }
                 }
-            }
             },
             "responses": {
                 "201": {
                     "description": "OK",
                     "schema": {
-                    "$ref": "#/components/schemas/File"
+                        "$ref": "#/components/schemas/File"
                     }
                 },
                 "500": {
                     "description": "ERROR",
                     "schema": {
-                    "$ref": "#/components/schemas/File"
+                        "$ref": "#/components/schemas/File"
                     }
+                }
             }
-            }
+        }},
+        "/files": {
+            "post": {
+                "tags": [
+                    "Add file"
+                ],
+                "description": "Создание информации о файле",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/File"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/File"
+                        }
+                    },
+                    "500": {
+                        "description": "ERROR",
+                        "schema": {
+                            "$ref": "#/components/schemas/File"
+                        }
+                    }
+                }
             },
-            "get" :{
+            "get": {
                 "tags": [
                     "Get all files"
                 ],
                 "description": "Получение списка информации о всех файлах",
                 "responses": {
-                "200": {
-                    "description": "OK",
-                    "schema": {
-                    "$ref": "#/components/schemas/File"
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/File"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/File"
+                        }
                     }
-                },
-                "404": {
-                    "description": "NOT FOUND",
-                    "schema": {
-                    "$ref": "#/components/schemas/File"
-                    }
-            }
-            }
+                }
             }
         },
         "/files/search/": {
-            "get" :{
+            "get": {
                 "tags": [
                     "Get all files"
                 ],
                 "description": "Поиск файлов по path",
-                "parameters": [{
-                    "name": "path",
-                    "in": "query",
-                    "description": "Search file",
-                    "schema": {"type": "string"},
-                    "required": true}],
+                "parameters": [
+                    {
+                        "name": "path",
+                        "in": "query",
+                        "description": "Search file",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
                 "responses": {
-                "200": {
-                    "description": "OK",
-                    "schema": {
-                    "$ref": "#/components/schemas/File"
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/File"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/File"
+                        }
                     }
-                },
-                "404": {
-                    "description": "NOT FOUND",
-                    "schema": {
-                    "$ref": "#/components/schemas/File"
-                    }
-            }
-            }
+                }
             }
         },
-        "/files/{file_id}":{
-            "get" :{
+        "/files/{file_id}": {
+            "get": {
                 "tags": [
                     "Get file"
                 ],
                 "description": "Получение информации о файле по file_id",
-                "parameters": [{
-                  "name": "file_id",
-                  "in": "path",
-                  "description": "file_id",
-                  "required": true,
-                  "type": "integer",
-                  "schema" : {
-                      "$ref": "#/components/schemas/file_id"
-                  }
-                }],
+                "parameters": [
+                    {
+                        "name": "file_id",
+                        "in": "path",
+                        "description": "file_id",
+                        "required": true,
+                        "type": "integer",
+                        "schema": {
+                            "$ref": "#/components/schemas/file_id"
+                        }
+                    }
+                ],
                 "responses": {
-                "200": {
-                    "description": "OK",
-                    "schema": {
-                    "$ref": "#/components/schemas/File"
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/File"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/File"
+                        }
                     }
-                },
-                "404": {
-                    "description": "NOT FOUND",
-                    "schema": {
-                    "$ref": "#/components/schemas/File"
-                    }
-            }
-            }
-            },
-        "delete": {
-            "tags": [
-                "Delete file"
-            ],
-            "description": "Удаление файла по file_id",
-            "parameters": [{
-                "name": "file_id",
-                "in": "path",
-                "required": true,
-                "type": "integer",
-                "schema" : {
-                    "$ref": "#/components/schemas/file_id"
                 }
-            }],
-            "responses": {
-                "204": {
-                    "description": "OK",
-                    "schema": {
-                    "$ref": "#/components/schemas/File"
+            },
+            "delete": {
+                "tags": [
+                    "Delete file"
+                ],
+                "description": "Удаление файла по file_id",
+                "parameters": [
+                    {
+                        "name": "file_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer",
+                        "schema": {
+                            "$ref": "#/components/schemas/file_id"
+                        }
                     }
-                },
-                "500": {
-                    "description": "ERROR",
-                    "schema": {
-                    "$ref": "#/components/schemas/File"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/File"
+                        }
+                    },
+                    "500": {
+                        "description": "ERROR",
+                        "schema": {
+                            "$ref": "#/components/schemas/File"
+                        }
                     }
-            }
+                }
             }
         }
-        }}}
+    }
+}
