@@ -104,7 +104,7 @@
         "/files": {
             "post": {
                 "tags": [
-                    "Add file"
+                    "Create info file"
                 ],
                 "description": "Создание информации о файле",
                 "requestBody": {
