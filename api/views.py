@@ -15,7 +15,7 @@ DOWNLOAD_DIR = join(dirname(realpath(parent)), 'flaskProject/static/downloads/')
 
 
 class FileUpload(Resource):
-    """Загрузка файла из локального хранилища."""
+    """Загрузка файла из локального хранилища"""
     def post(self):
         file = request.files.get('file')
         filename = secure_filename(file.filename)
@@ -31,7 +31,7 @@ class FileUpload(Resource):
         )
         db.session.add(upload)
         db.session.commit()
-        return 'File uploaded successfully', 201
+        return 'File uploaded successfully'
 
 
 class FileDownload(Resource):
@@ -53,7 +53,7 @@ class FileDownload(Resource):
 
 
 class FileList(Resource):
-    """Получение списка всех файлов. Создание информации о файле."""
+    """Получение списка всех файлов. Создание информации о файле"""
     def get(self):
         files = File.query.all()
         if files:
@@ -78,7 +78,7 @@ class FileList(Resource):
 
 
 class FileDetail(Resource):
-    """Получение файла по file_id. Удаление файла."""
+    """Получение файла по file_id. Удаление файла"""
     def get(self, file_id):
         file = File.query.filter_by(file_id=file_id).first_or_404()
         return file.json()
@@ -91,7 +91,7 @@ class FileDetail(Resource):
 
 
 class FileSearch(Resource):
-    """Получение списка всех файлов с учетом поиска по path."""
+    """Получение списка всех файлов с учетом поиска по path"""
     def get(self, *args, **kwargs):
         args = request.args
         files = File.query.filter(File.path.ilike('%' + args.get('path') + '%')).all()
