@@ -1,8 +1,9 @@
 import os
+import io
 
 from os.path import join, dirname, realpath
 
-from flask import request
+from flask import request, current_app, send_file
 from flask_restful import Resource
 from api.models import File, db
 from werkzeug.utils import secure_filename
@@ -10,6 +11,7 @@ from werkzeug.utils import secure_filename
 
 parent = os.path.dirname(os.path.abspath(__file__)).replace('api', '')
 UPLOAD_DIR = join(dirname(realpath(parent)), 'flaskProject/static/uploads/')
+DOWNLOAD_DIR = join(dirname(realpath(parent)), 'flaskProject/static/downloads/')
 
 
 class FileUpload(Resource):
@@ -30,6 +32,24 @@ class FileUpload(Resource):
         db.session.add(upload)
         db.session.commit()
         return 'File uploaded successfully', 201
+
+
+class FileDownload(Resource):
+    """Скачивание файла по file_id"""
+    def get(self, file_id):
+        file = File.query.filter_by(file_id=file_id).first_or_404()
+        uploads = os.path.join(current_app.root_path, UPLOAD_DIR)
+        with open(uploads+(file.name+file.extension), 'rb') as f:
+            file_download = f.read()
+        output = io.BytesIO()
+        output.write(file_download)
+        output.seek(0)
+        response = send_file(
+            output,
+            as_attachment=True,
+            download_name=file.name+file.extension,
+        )
+        return response
 
 
 class FileList(Resource):
