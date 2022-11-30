@@ -6,7 +6,7 @@ from os.path import join, dirname, realpath
 from flask import request, current_app, send_file
 from flask_restful import Resource
 from api.models import File, db
-from werkzeug.utils import secure_filename
+from flaskProject.filename_config import secure_filename
 
 
 parent = os.path.dirname(os.path.abspath(__file__)).replace('api', '')
@@ -59,7 +59,7 @@ class FileList(Resource):
         if files:
             return {'files': list(file.json() for file in files)}
         else:
-            return {'message': 'Objects not found'}, 404
+            return 'Objects not found', 404
 
     def post(self):
         data = request.get_json()
@@ -87,7 +87,7 @@ class FileDetail(Resource):
         file = File.query.filter_by(file_id=file_id).first_or_404()
         db.session.delete(file)
         db.session.commit()
-        return {'message': 'File deleted successfully'}, 204
+        return 'File deleted successfully', 204
 
 
 class FileSearch(Resource):
@@ -98,4 +98,4 @@ class FileSearch(Resource):
         if files:
             return {'files': list(file.json() for file in files)}
         else:
-            return {'message': 'Objects not found'}, 404
+            return 'Objects not found', 404
