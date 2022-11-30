@@ -9,9 +9,8 @@ from api.models import File, db
 from flaskProject.filename_config import secure_filename
 
 
-parent = os.path.dirname(os.path.abspath(__file__)).replace('api', '')
-UPLOAD_DIR = join(dirname(realpath(parent)), 'flaskProject/static/uploads/')
-DOWNLOAD_DIR = join(dirname(realpath(parent)), 'flaskProject/static/downloads/')
+PARENT_DIR = os.path.dirname(os.path.abspath(__file__)).replace('api', '')
+UPLOAD_DIR = join(dirname(realpath(PARENT_DIR)), 'flaskProject/static/uploads/')
 
 
 class FileUpload(Resource):
