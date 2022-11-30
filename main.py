@@ -4,7 +4,7 @@ from flask_restful import Api
 from flask_swagger_ui import get_swaggerui_blueprint
 
 from api.models import db
-from api.views import FileUpload, FileList, FileDetail, FileSearch, FileDownload
+from api.views import FileUpload, FileListCreate, FileDetail, FileSearch, FileDownload
 
 
 app = Flask(__name__)
@@ -26,7 +26,7 @@ SWAGGER_BLUERPRINT = get_swaggerui_blueprint(
 )
 app.register_blueprint(SWAGGER_BLUERPRINT, url_prefix=SWAGGER_URL)
 
-api.add_resource(FileList, '/api/files/')
+api.add_resource(FileListCreate, '/api/files/')
 api.add_resource(FileDetail, '/api/files/<int:file_id>/')
 api.add_resource(FileSearch, '/api/files/search/')
 api.add_resource(FileUpload, '/api/files/upload/')

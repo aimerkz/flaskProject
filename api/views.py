@@ -1,3 +1,4 @@
+import datetime
 import os
 import io
 
@@ -51,7 +52,7 @@ class FileDownload(Resource):
         return response
 
 
-class FileList(Resource):
+class FileListCreate(Resource):
     """Получение списка всех файлов. Создание информации о файле"""
     def get(self):
         files = File.query.all()
@@ -77,10 +78,20 @@ class FileList(Resource):
 
 
 class FileDetail(Resource):
-    """Получение файла по file_id. Удаление файла"""
+    """Получение файла по file_id. Обновление файла. Удаление файла"""
     def get(self, file_id):
         file = File.query.filter_by(file_id=file_id).first_or_404()
         return file.json()
+
+    def put(self, file_id):
+        data = request.get_json()
+        file = File.query.filter_by(file_id=file_id).first_or_404()
+        file.name = data['name']
+        file.path = data['path']
+        file.comment = data['comment']
+        file.updated_at = datetime.datetime.now()
+        db.session.commit()
+        return 'File information updated successfully'
 
     def delete(self, file_id):
         file = File.query.filter_by(file_id=file_id).first_or_404()
