@@ -153,10 +153,44 @@
                 }
             }
         },
+        "/files/{file_id}/download/": {
+            "get": {
+                "tags": [
+                    "Download file"
+                ],
+                "description": "Скачивание файла по file_id",
+                "parameters": [
+                    {
+                        "name": "file_id",
+                        "in": "path",
+                        "description": "file_id",
+                        "required": true,
+                        "type": "integer",
+                        "schema": {
+                            "$ref": "#/components/schemas/file_id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/components/schemas/File"
+                        }
+                    },
+                    "404": {
+                        "description": "NOT FOUND",
+                        "schema": {
+                            "$ref": "#/components/schemas/File"
+                        }
+                    }
+                }
+            }
+        },
         "/files/search/": {
             "get": {
                 "tags": [
-                    "Get all files"
+                    "Search files"
                 ],
                 "description": "Поиск файлов по path",
                 "parameters": [

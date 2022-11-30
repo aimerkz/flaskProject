@@ -39,3 +39,4 @@ venv.bak/
 
 migrations/
 static/uploads/
+static/downloads/
