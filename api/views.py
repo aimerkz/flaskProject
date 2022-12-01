@@ -99,6 +99,7 @@ class FileDetail(Resource):
 
     def delete(self, file_id):
         file = File.query.filter_by(file_id=file_id).first_or_404()
+        os.remove(file.path+file.name+file.extension)
         db.session.delete(file)
         db.session.commit()
         return 'File deleted successfully', 204
