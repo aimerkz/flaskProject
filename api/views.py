@@ -86,11 +86,13 @@ class FileDetail(Resource):
     def put(self, file_id):
         data = request.get_json()
         file = File.query.filter_by(file_id=file_id).first_or_404()
+        old_name = file.name+file.extension
         file.name = data['name']
         file.path = data['path']
         file.comment = data['comment']
         file.updated_at = datetime.datetime.now()
         db.session.commit()
+        os.rename(UPLOAD_DIR+old_name, UPLOAD_DIR+file.name+file.extension)
         return 'File information updated successfully'
 
     def delete(self, file_id):
