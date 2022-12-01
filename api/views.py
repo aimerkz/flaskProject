@@ -92,7 +92,7 @@ class FileDetail(Resource):
         file.comment = data['comment']
         file.updated_at = datetime.datetime.now()
         db.session.commit()
-        os.rename(UPLOAD_DIR+old_name, UPLOAD_DIR+file.name+file.extension)
+        os.rename(UPLOAD_DIR+old_name, file.path+file.name+file.extension)
         return 'File information updated successfully'
 
     def delete(self, file_id):
