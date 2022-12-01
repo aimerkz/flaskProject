@@ -22,8 +22,8 @@ docker-compose up -d
 ```
 - Выполните миграции:
 ```sh
-docker-compose exec web_flask db init
-docker-compose exec web_flask db migrate
+docker-compose exec web flask db init
+docker-compose exec web flask db migrate
 ```
 - Заполните базу тестовыми данными:
 ```
