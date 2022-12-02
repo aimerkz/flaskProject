@@ -33,7 +33,7 @@ class FileUpload(Resource):
         db.session.add(upload)
         db.session.commit()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('upload_done.html'), 200,
+        return make_response(render_template('upload_done.html'), 201,
                              headers)
 
 
@@ -47,7 +47,6 @@ class FileUploadForm(Resource):
 
 class FileDownload(Resource):
     """Скачивание файла по file_id"""
-
     def get(self, file_id):
         file = File.query.filter_by(file_id=file_id).first_or_404()
         uploads = os.path.join(current_app.root_path, UPLOAD_DIR)
