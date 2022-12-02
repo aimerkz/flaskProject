@@ -4,8 +4,9 @@ from flask_restful import Api
 from flask_swagger_ui import get_swaggerui_blueprint
 
 from api.models import db
-from api.views import FileUpload, FileListCreate, FileDetail, FileSearch, FileDownload
-
+from api.views import \
+    FileUpload, FileListCreate, FileDetail, FileSearch, \
+    FileDownload, FileUploadForm
 
 app = Flask(__name__)
 app.config.from_object('flaskProject.config.Config')
@@ -30,6 +31,7 @@ api.add_resource(FileListCreate, '/api/files/')
 api.add_resource(FileDetail, '/api/files/<int:file_id>/')
 api.add_resource(FileSearch, '/api/files/search/')
 api.add_resource(FileUpload, '/api/files/upload/')
+api.add_resource(FileUploadForm, '/api/files/upload/upload_form/')
 api.add_resource(FileDownload, '/api/files/<int:file_id>/download/')
 
 if __name__ == '__main__':

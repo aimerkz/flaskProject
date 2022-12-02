@@ -24,11 +24,10 @@ docker-compose up -d
 ```sh
 docker-compose exec web flask db init
 docker-compose exec web flask db migrate
+docker-compose exec web flask db upgrade
 ```
-- Заполните базу тестовыми данными:
-```
-docker exec -i postgres_flask psql -U flaskuser flaskdb < static/flaskdb_dump.sql
-```
-- Перейдите по ссылке: \
-[flaskProject](http://0.0.0.0:5000/api/files/) \
+- Загрузите файл: \
+[FileUploadForm](http://0.0.0.0:5000/api/files/upload/upload_form/)
+
+:open_file_folder: Документация к API проекта: \
 [Swagger UI](http://0.0.0.0:5000/api/swagger/)

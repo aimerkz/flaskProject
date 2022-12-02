@@ -5,7 +5,7 @@ import io
 
 from os.path import join, dirname, realpath
 
-from flask import request, current_app, send_file
+from flask import request, current_app, send_file, render_template, make_response
 from flask_restful import Resource
 from api.models import File, db
 from flaskProject.filename_config import secure_filename
@@ -32,15 +32,26 @@ class FileUpload(Resource):
         )
         db.session.add(upload)
         db.session.commit()
-        return 'File uploaded successfully'
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('upload_done.html'), 200,
+                             headers)
+
+
+class FileUploadForm(Resource):
+    """Загрузка файла через форму HTML"""
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('upload_file.html'), 200,
+                             headers)
 
 
 class FileDownload(Resource):
     """Скачивание файла по file_id"""
+
     def get(self, file_id):
         file = File.query.filter_by(file_id=file_id).first_or_404()
         uploads = os.path.join(current_app.root_path, UPLOAD_DIR)
-        with open(uploads+(file.name+file.extension), 'rb') as f:
+        with open(uploads + (file.name + file.extension), 'rb') as f:
             file_download = f.read()
         output = io.BytesIO()
         output.write(file_download)
@@ -48,7 +59,7 @@ class FileDownload(Resource):
         response = send_file(
             output,
             as_attachment=True,
-            download_name=file.name+file.extension,
+            download_name=file.name + file.extension,
         )
         return response
 
@@ -87,19 +98,19 @@ class FileDetail(Resource):
     def put(self, file_id):
         data = request.get_json()
         file = File.query.filter_by(file_id=file_id).first_or_404()
-        old_name = file.path+file.name+file.extension
+        old_name = file.path + file.name + file.extension
         file.name = data['name']
         file.path = data['path']
         file.comment = data['comment']
         file.updated_at = datetime.datetime.now()
         db.session.commit()
-        new_name = file.path+file.name+file.extension
+        new_name = file.path + file.name + file.extension
         shutil.move(old_name, new_name)
         return 'File information updated successfully'
 
     def delete(self, file_id):
         file = File.query.filter_by(file_id=file_id).first_or_404()
-        os.remove(file.path+file.name+file.extension)
+        os.remove(file.path + file.name + file.extension)
         db.session.delete(file)
         db.session.commit()
         return 'File deleted successfully', 204
