@@ -27,7 +27,7 @@ docker-compose exec web flask db migrate
 docker-compose exec web flask db upgrade
 ```
 - Загрузите файл: \
-[FileUploadForm](http://0.0.0.0:5000/api/files/upload/upload_form/)
+[FileUploadForm](http://127.0.0.1:5000/api/files/upload/upload_form/)
 
 :open_file_folder: Документация к API проекта: \
-[Swagger UI](http://0.0.0.0:5000/api/swagger/)
+[Swagger UI](http://127.0.0.1:5000/api/swagger/)
